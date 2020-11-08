@@ -1,0 +1,5 @@
+Voilà donc où j'en suis. Je ne savais pas si je ne devais mettre que les fichiers "source" ou tout le projet Eclipse.
+Dans le doute, j'ai tout mis... mais si vous me dites qu'on ne partage que les sources, alors on peut supprimer plein de choses...
+Cette version ne contient pas encore l'utilisation d'une base de données MySQL, c'est ma prochaine étape.
+
+Elle nécessite vraiment d'être améliorée du côté de l'interface Web (il y a les fonctionnalités, mais c'est très, très moche...).

@@ -1,0 +1,71 @@
+package employeedb;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+
+import shared.IEmployee;
+import shared.IEmployeeDB;
+
+/**
+ * Implementation of the employee database.
+ * @author Natacha
+ *
+ */
+public class EmployeeDB extends UnicastRemoteObject implements IEmployeeDB {
+
+	/**
+	 * Serial version UUID
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Hashmap containing the employees indexed by their identifier.
+	 */
+	HashMap<String, IEmployee> employeeDB;
+	
+	/**
+	 * Default constructor.
+	 * Creates some employees and adds them to the hashmap.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public EmployeeDB() throws RemoteException {
+		this.employeeDB = new HashMap<String, IEmployee>();
+		
+		Employee nat = new Employee("Natacha");
+		Employee romain = new Employee("Romain");
+		Employee alex = new Employee("Alexandre");
+		
+		employeeDB.put("Natacha", nat);
+		employeeDB.put("Romain", romain);
+		employeeDB.put("Alexandre", alex);
+		
+	}
+
+	@Override
+	public boolean isEmployee(String name) throws RemoteException {
+		return (employeeDB.get(name) != null);
+	}
+
+	@Override
+	public boolean employeeAuthentication(String name, String pwd) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IEmployee getEmployee(String name) throws RemoteException {
+		return employeeDB.get(name);
+	}
+	
+	/**
+	 * Notify the employee by sending him a message.
+	 * @param subject the subject of the message
+	 * @param message the content of the message
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public void notifyEmployee(IEmployee empl, String subject, String message) throws RemoteException {
+		System.out.println(empl+"   "+subject+"    "+message);
+	}
+
+}

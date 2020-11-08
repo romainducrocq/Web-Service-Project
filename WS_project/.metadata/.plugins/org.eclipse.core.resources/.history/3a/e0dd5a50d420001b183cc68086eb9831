@@ -1,0 +1,222 @@
+package rentalserver;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import shared.IEmployee;
+import shared.IVehicle;
+import shared.IVehicleParkRentalManagement;
+
+/**
+ * Implementation of the vehicle park rental management module.
+ * @author Natacha
+ *
+ */
+public class VehicleParkRentalManagement extends UnicastRemoteObject implements IVehicleParkRentalManagement {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	public static final String notificationSenderEmail = "ifscars2020@gmail.com";
+	public static final String notificationSenderPwd = "ifscars?2";
+	
+	
+	/**
+	 * Hash map indexed by the vehicle id and containing the IVehicle object this id as unique identifier.
+	 */
+	HashMap<Long,IVehicle> park;
+	
+	/**
+	 * Counter to generate a unique vehicle identifier.
+	 */
+	long vehicleCounterForUniqueId;
+		
+	/**
+	 * Hash map indexed by the vehicle id and containing for each vehicle, the list of employees renting
+	 * or waiting for the rental.
+	 * 
+	 * If the array list is empty, then the car is not rented.
+	 * The first element of the array list is the current renter.
+	 * The next elements are the employees waiting for renting this car. 
+	 */
+	HashMap<Long, ArrayList<IEmployee>> rentalWaitingList;
+	
+	/**
+	 * Initializes a new vehicle park rental module and load some vehicles.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public VehicleParkRentalManagement() throws RemoteException {
+		park = new HashMap<Long,IVehicle>();
+		
+		rentalWaitingList = new HashMap<Long, ArrayList<IEmployee>>();
+		
+		rentalWaitingList = new HashMap<Long, ArrayList<IEmployee>>();
+		
+		vehicleCounterForUniqueId = 0;
+		
+		loadVehicles();
+
+	}
+	
+	/**
+	 * Loads a panel of vehicles.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public void loadVehicles() throws RemoteException {		
+		addVehicle("Renault", "Clio", 2020, 5, "Diesel", "Manual", 24000);
+		addVehicle("Renault", "Clio", 2019, 5, "Gas", "Manual", 20000);
+		addVehicle("Peugeot", "208", 2020, 5, "Gas", "Automatic", 23000);
+		addVehicle("Peugeot", "308", 2019, 5, "Gas", "Manual", 21000);
+		addVehicle("Renault", "Twingo", 2019, 4, "Gas", "Manual", 16000);
+	}
+
+
+	@Override
+	public List<IVehicle> getAvailableVehiclesForRental() throws RemoteException {
+		List<IVehicle> listVehiclesForRental = new ArrayList<IVehicle>();
+		
+		Collection<IVehicle> vehicles = park.values();
+		Iterator<IVehicle> it = vehicles.iterator();
+		while (it.hasNext()) {
+			IVehicle v = it.next();
+			if (v.isAvailableForRent()) {
+				listVehiclesForRental.add(v);
+			}
+		}
+		return listVehiclesForRental;
+	
+		
+		/** TODO autre méthode : itérer sur rentalWaitingList. Si rentalWaitingList.values() = empty, alors
+		 * available.
+		 */
+/*		Set<Long> keys = rentalWaitingList.keySet();
+		Collection<ArrayList<IEmployee>> renters = rentalWaitingList.values();
+		Iterator<ArrayList<IEmployee>> it = renters.iterator();
+		Iterator<Long> itKeys = keys.iterator();
+		
+		long vehId;
+		ArrayList<IEmployee> listEmpl;
+		while (it.hasNext()) {
+			listEmpl = it.next();
+			vehId = itKeys.next();
+			if (listEmpl.isEmpty()) { // the vehicle is not rented, it is available
+				listVehiclesForRental.add(park.get(vehId));
+			}
+		}
+		
+		return listVehiclesForRental;
+*/
+	}
+
+	@Override
+	public List<IVehicle> getAvailableVehiclesForSale() throws RemoteException {
+		List<IVehicle> listVehiclesForSale = new ArrayList<IVehicle>();
+		Collection<IVehicle> vehicles = park.values();
+		Iterator<IVehicle> it = vehicles.iterator();
+		while (it.hasNext()) {
+			IVehicle v = it.next();
+			if (v.isAvailableForSale()) {
+				listVehiclesForSale.add(v);
+			}
+		}
+		return listVehiclesForSale;
+	}
+
+	@Override
+	/**
+	 * Returns 	0 if the vehicle can not be rent (for example, it has been sold during the rental process),
+	 * 			1 if the vehicle can be rent,
+	 * 			2 if the vehicle is already rent and the employee will be put on a waiting list
+	 * @param id the vehicle unique identifier
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public int rentVehicle(IEmployee employee, long vehicleId) throws RemoteException {
+		IVehicle v = park.get(Long.valueOf(vehicleId));
+		// If no vehicle found with this id, return 
+		if (v == null) {
+			employee.notifyEmployee("IMPORTANT : Rental message", 
+					"Hi "+employee.getIdentifier()+"!\n\n We are SORRY but this vehicle can not be rented !");
+			return 0;
+		}
+		else {
+			
+			List<IEmployee> rentersList = rentalWaitingList.get(Long.valueOf(vehicleId));
+			
+			// Adds the employee to the rental list.
+			rentersList.add(employee);
+			
+			// If there is only one employee in the rental list, then the car is rented by this employee.
+			if (rentersList.size() == 1) {
+				v.rentCar();
+				employee.notifyEmployee("IMPORTANT : Rental message", 
+						"Hi "+employee.getIdentifier()+"!\n\n You have rented this vehicle of id "+vehicleId+" ! Enjoy its use !!!");
+				return 1;
+			}
+			// Else the car is already rented, the employee has to wait
+			else {
+				employee.notifyEmployee("IMPORTANT : Rental message", 
+						"Hi "+employee.getIdentifier()+"!\n\n Unfortunately, the car num "+vehicleId+" is already rented.\n You have been added to the waiting list and will be notified as soon as the vehicle is available.");					
+				return 2;
+			}
+		}
+	}
+
+	@Override
+	public void returnCar(long vehicleid, int note, String conditionOfReturn) throws RemoteException {
+		List<IEmployee> rentersList = rentalWaitingList.get(Long.valueOf(vehicleid));
+		
+		// Removes the current employee renter from the rental list ; it corresponds to the first element of the list	
+		rentersList.remove(0);
+		
+		IVehicle veh = park.get(Long.valueOf(vehicleid));
+		veh.returnCar(note, conditionOfReturn);
+		
+		if (! rentersList.isEmpty()) {
+			// Notify the first employee waiting for the car
+			IEmployee empl = rentersList.get(0);
+			
+			veh.rentCar();
+						
+			empl.notifyEmployee("IMPORTANT : Rental message", 
+					"Car number "+vehicleid+" has been returned. You are now rented it. Enjoy !!!!");
+		}
+	}
+
+	@Override
+	public boolean sellVehicle(long vehId) throws RemoteException {
+		if (rentalWaitingList.remove(vehId) != null && park.remove(vehId) != null)
+			return true;
+		else return false;
+	}
+	
+	/**
+	 * Adds a new vehicle in the park given its attributes
+	 * @param make the make of the vehicle
+	 * @param model the model of the vehicle
+	 * @param year the year of the vehicle
+	 * @param seatingCapacity the number of seats of the vehicle
+	 * @param fuelType the fuel type of the vehicle
+	 * @param transmission the transmission of the vehicle
+	 * @param priceInEuros the price of the vehicle
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public void addVehicle(String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException {
+		Vehicle v = new Vehicle(this.vehicleCounterForUniqueId, make, model, year, seatingCapacity, fuelType, transmission, priceInEuros);
+
+		park.put(Long.valueOf(this.vehicleCounterForUniqueId),v);
+		
+		rentalWaitingList.put(Long.valueOf(this.vehicleCounterForUniqueId), new ArrayList<IEmployee>());
+		
+		vehicleCounterForUniqueId++;
+			
+	}
+
+}

@@ -1,0 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ page import="java.util.List" %>
+<%@ page import="shared.IVehicle" %>
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>RENTAL PAGE</title>
+</head>
+<body>
+<form action="<%= request.getContextPath() %>/rent" method="post">
+<% List<IVehicle> vehiclesList = (List<IVehicle>)request.getAttribute("vehiclesList");
+int i;
+System.out.println("testattr = "+request.getAttribute("testattr"));
+System.out.println(" ########### vehiclesList = "+vehiclesList);
+System.out.println(" ########### vehiclesList size = "+vehiclesList.size());
+
+for (i=0;i==vehiclesList.size()-1;i++) { 
+System.out.println(" i = "+i+" : "+vehiclesList.get(i)); %>
+<input type="radio" name="vehid" value="<%= vehiclesList.get(i).getId() %>" /><%= vehiclesList.get(i).getModel() %>
+<% } %>
+</form>
+
+</body>
+</html>

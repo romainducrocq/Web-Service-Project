@@ -1,0 +1,7 @@
+INDEX VERSION 1.3+/home/natacha/Documents/GitHub/Web-Service-Project/WS_project/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+2248038274.index
+3125681518.index
+3552782305.index
+2598764420.index
+3746734600.index
+3162361720.index

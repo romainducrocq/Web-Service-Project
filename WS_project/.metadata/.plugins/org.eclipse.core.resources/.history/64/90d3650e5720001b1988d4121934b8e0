@@ -1,0 +1,60 @@
+package mail;
+
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
+
+public class SendEmail2 {
+
+	public static void main(String [] args) {    
+
+	    String host = "smtp.gmail.com";
+	    String from="ifscars2020@gmail.com";//Your E-mail-Id
+	    String pass="ifscars?2";      //your e-mail account password
+
+		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+		String to = "ngrumbach@gmail.com"; //recipient E-mail-Id
+		String subject ="test mail";
+		String messageText = "hello abc";
+		boolean sessionDebug = true;
+
+
+		Properties props = System.getProperties();
+		props.put("mail.host", host);
+		props.put("mail.transport.protocol.", "smtp");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.", "true");
+		props.put("mail.smtp.port", "465");//port number 465 for Secure (SSL) and we can alsonuse port no 587 for Secure (TLS)
+		props.put("mail.smtp.socketFactory.fallback", "false");
+		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+
+
+		Session mailSession = Session.getDefaultInstance(props, null);
+		mailSession.setDebug(sessionDebug);
+
+		
+		Message msg = new MimeMessage(mailSession);
+		msg.setFrom(new InternetAddress(from));
+		InternetAddress[] address = {new InternetAddress(to)};
+		msg.setRecipients(Message.RecipientType.TO, address);
+		msg.setSubject(subject);
+		msg.setContent(messageText, "text/html");
+		
+		
+		Transport transport = mailSession.getTransport("smtp");
+		transport.connect(host, from, pass);
+
+
+		try {
+		    transport.sendMessage(msg, msg.getAllRecipients());
+		    System.out.println("Send Success");
+		    boolean WasEmailSent = true; // assume it was sent
+		   }
+
+		catch (Exception err) {
+			boolean WasEmailSent = false; 
+        }
+        transport.close();
+                
+}

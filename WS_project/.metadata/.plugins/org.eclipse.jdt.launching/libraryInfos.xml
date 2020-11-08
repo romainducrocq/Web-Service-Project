@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="/home/natacha/jre1.8.0_271" version="1.8.0_271">
+<bootpath>
+<entry path="/home/natacha/jre1.8.0_271/lib/resources.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/lib/rt.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/lib/sunrsasign.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/lib/jsse.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/lib/jce.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/lib/charsets.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/lib/jfr.jar"/>
+<entry path="/home/natacha/jre1.8.0_271/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/home/natacha/jre1.8.0_271/lib/ext"/>
+<entry path="/usr/java/packages/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/home/natacha/jre1.8.0_271/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

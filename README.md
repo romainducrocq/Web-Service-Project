@@ -52,17 +52,17 @@ Good luck !
 
 ### Run mysql:
 > shell> service mysql start
-shell> service mysql status
-shell> service mysql stop
+> shell> service mysql status
+> shell> service mysql stop
 
 ### Configure mysql:
 > https://dev.mysql.com/doc/refman/8.0/en/resetting-permissions.html
 
 > shell> mysql -u root -p
-enter password:
-mysql> FLUSH PRIVILEGES;
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
-mysql> exit
+> enter password:
+> mysql> FLUSH PRIVILEGES;
+> mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
+> mysql> exit
 
 ### Execute .sql files with mysql:
 > https://stackoverflow.com/questions/8940230/how-to-run-sql-script-in-mysql

@@ -44,3 +44,36 @@ Les véhicules sont identifiés par leur id unique. 5 véhicules sont actuellem
 Je crois n'avoir rien oublié, dites moi si ça fonctionne...
 
 Good luck !
+
+## MySql
+
+### Install mysql:
+> https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
+
+### Run mysql:
+> shell> service mysql start
+shell> service mysql status
+shell> service mysql stop
+
+### Configure mysql:
+> https://dev.mysql.com/doc/refman/8.0/en/resetting-permissions.html
+
+> shell> mysql -u root -p
+enter password:
+mysql> FLUSH PRIVILEGES;
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
+mysql> exit
+
+### Execute .sql files with mysql:
+> https://stackoverflow.com/questions/8940230/how-to-run-sql-script-in-mysql
+
+> shell> mysql --user="root" --password="1Rootpwd!" < createDB.sql
+
+### mysql-connector-java-8.0.21.jar
+> https://jar-download.com/artifacts/mysql/mysql-connector-java
+
+### Install mysql-workbench:
+> shell> snap install mysql-workbench-community
+
+### Run mysql-workbench:
+> shell> mysql-workbench-community

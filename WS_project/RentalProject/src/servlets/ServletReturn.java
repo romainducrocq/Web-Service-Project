@@ -54,13 +54,9 @@ public class ServletReturn extends HttpServlet {
 		String vehicleid = request.getParameter("vehicleid");
 		String note = request.getParameter("note");
 		String condition = request.getParameter("condition");
-		
-		System.out.println(" DANS SERVLET RETURN : vehicleid = "+vehicleid);
-		System.out.println(" DANS SERVLET RETURN : note = "+note);
-		System.out.println(" DANS SERVLET RETURN : condition = "+condition);
 	
 		
-		rentalManager.returnCar(Long.valueOf(vehicleid), Integer.valueOf(note), condition);
+		rentalManager.returnCar(Integer.valueOf(vehicleid), Integer.valueOf(note), condition);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seeyou.html");
 		dispatcher.forward(request, response);

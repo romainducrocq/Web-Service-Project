@@ -27,14 +27,14 @@ public interface IVehicle extends Remote {
 	 * @return the unique identifier of the vehicle
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public long getId() throws RemoteException;
+	public int getId() throws RemoteException;
 	
 	/**
 	 * Setter of the unique identifier of the vehicle
 	 * @param uniqueid the unique identifier of the vehicle
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public void setId(long uniqueid) throws RemoteException;
+	public void setId(int uniqueid) throws RemoteException;
 	
 	/**
 	 * Getter for the "make" attribute of the vehicle, nothing more than the brand of the car.

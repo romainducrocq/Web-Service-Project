@@ -10,14 +10,6 @@ import java.rmi.RemoteException;
  */
 public interface IEmployeeDB extends Remote {
 
-	/**
-	 * Checks if an employee with this identifier is part of the company.
-	 * @param id the identifier to check
-	 * @return true if there exists an employee with this identifier in the employee database.
-	 * @throws RemoteException may occur as this object will be used in remote method call.
-	 */
-	public boolean isEmployee(String id) throws RemoteException;
-	
 	
 	/**
 	 * Returns the IEmployee implementation object corresponding to this identifier.

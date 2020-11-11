@@ -22,7 +22,7 @@
 		Iterator<IVehicle> it = vehiclesList.iterator();
 		while (it.hasNext()) {
 			IVehicle v = it.next();
-			System.out.println(v); %>
+			%>
 			<input type="radio" id=<%=v.getId()%> name="vehicleid" value=<%=v.getId()%>>
 			<label for=<%=v.getId()%>><%=v.getMake()+" "+v.getModel()+" "+v.getYear()+" "+v.getAverageNote()%></label><br>
 		<% } %>

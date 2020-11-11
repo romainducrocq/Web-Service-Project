@@ -15,7 +15,7 @@ public class RentalServer {
 	public static void main(String[] args) {
 		try {
 			
-			VehicleParkRentalManagement rentalMgt = new VehicleParkRentalManagement();
+			RentalManager rentalMgt = new RentalManager();
 
 			LocateRegistry.createRegistry(1099);
 			Naming.rebind("//localhost:1099/rentalmanagement", rentalMgt);

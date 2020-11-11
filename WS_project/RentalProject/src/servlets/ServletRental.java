@@ -63,7 +63,7 @@ public class ServletRental extends HttpServlet {
 		String vehicleid = request.getParameter("vehicleid");
 		
 		
-		int resultOfRental = rentalManager.rentVehicle(employeeDB.getEmployee(userid), Long.valueOf(vehicleid));
+		int resultOfRental = rentalManager.rentVehicle(employeeDB.getEmployee(userid), Integer.valueOf(vehicleid));
 		
 		RequestDispatcher dispatcher;
 		if (resultOfRental == 0) { // error

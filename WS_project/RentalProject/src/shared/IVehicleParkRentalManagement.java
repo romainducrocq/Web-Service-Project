@@ -35,7 +35,7 @@ public interface IVehicleParkRentalManagement extends Remote {
 	 * @return 0 if the vehicle can not be rent, 1 if the vehicle can be rent or 2 if the vehicle is already rent and the employee will be put on a waiting list
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public int rentVehicle(IEmployee employee, long vehicleid) throws RemoteException;
+	public int rentVehicle(IEmployee employee, int vehicleid) throws RemoteException;
 	
 	/**
 	 * Called to return a car : add the note and condition of return to the vehicle and free it for next rental. 
@@ -44,7 +44,7 @@ public interface IVehicleParkRentalManagement extends Remote {
 	 * @param conditionOfReturn a comment given by the employee to specify the condition of return of the vehicle.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public void returnCar(long vehicleid, int note, String conditionOfReturn) throws RemoteException;
+	public void returnCar(int vehicleid, int note, String conditionOfReturn) throws RemoteException;
 	
 	/**
 	 * Removes vehicle from the vehicles park because it is sold.
@@ -53,7 +53,7 @@ public interface IVehicleParkRentalManagement extends Remote {
 	 * 			false if there is a problem (vehicle not already rented or not anymore in the park...)
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public boolean sellVehicle(long vehId) throws RemoteException;
+	public boolean sellVehicle(int vehId) throws RemoteException;
 	
 	/**
 	 * Adds a new vehicle in the park given its attributes
@@ -66,6 +66,6 @@ public interface IVehicleParkRentalManagement extends Remote {
 	 * @param priceInEuros the price in Euros to sell this vehicle
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public void addVehicle(String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException;
+//	public void addVehicle(String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException;
 
 }

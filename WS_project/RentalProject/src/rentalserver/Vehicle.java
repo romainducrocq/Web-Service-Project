@@ -23,7 +23,7 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	/**
 	 * The unique identifier of the vehicle.
 	 */
-	long uniqueId;
+	int uniqueId;
 	
 	/**
 	 * The make of the vehicle (for example, Renault, Peugeot...)
@@ -86,7 +86,7 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	 * @param id the unique identifier of the vehicle
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public Vehicle(long id) throws RemoteException {
+	public Vehicle(int id) throws RemoteException {
 		this.uniqueId = id;
 		this.make = "Renault";
 		this.model = "Clio";
@@ -116,7 +116,7 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	 * @param priceInEuros the price in Euros for this vehicle
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public Vehicle(long id, String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException {
+	public Vehicle(int id, String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException {
 		this.uniqueId = id;
 		this.make = make;
 		this.model = model;
@@ -139,7 +139,7 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
-	public long getId() throws RemoteException {
+	public int getId() throws RemoteException {
 		return this.uniqueId;
 	}
 
@@ -149,7 +149,7 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
-	public void setId(long uniqueid) throws RemoteException {
+	public void setId(int uniqueid) throws RemoteException {
 		this.uniqueId = uniqueid;
 	}
 

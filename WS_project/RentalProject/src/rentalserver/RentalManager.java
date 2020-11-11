@@ -17,6 +17,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import employees.DBManager;
 import shared.IEmployee;
 import shared.IVehicle;
 import shared.IVehicleParkRentalManagement;
@@ -26,29 +27,37 @@ import shared.IVehicleParkRentalManagement;
  * @author Natacha
  *
  */
-public class VehicleParkRentalManagement extends UnicastRemoteObject implements IVehicleParkRentalManagement {
+public class RentalManager extends UnicastRemoteObject implements IVehicleParkRentalManagement {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
+	/**
+	 * Emails will be sent by ifscars2020@gmail.com
+	 */
 	private String notificationSenderEmail = "ifscars2020@gmail.com";
+	
+	/**
+	 * Emails will be sent by ifscars2020@gmail.com. The password is needed to set the "from" parameter.
+	 */
 	private String notificationSenderPwd = "ifscars?2";
 	
+	/**
+	 * The mail session.
+	 */
 	private Session mailSession;
+	
+	/**
+	 * The gmail host.
+	 */
 	private String host = "smtp.gmail.com";
 	
 	/**
 	 * Hash map indexed by the vehicle id and containing the IVehicle object this id as unique identifier.
 	 */
-	HashMap<Long,IVehicle> park;
-	
-	/**
-	 * Counter to generate a unique vehicle identifier.
-	 */
-	long vehicleCounterForUniqueId;
+	HashMap<Integer,IVehicle> park;
 		
 	/**
 	 * Hash map indexed by the vehicle id and containing for each vehicle, the list of employees renting
@@ -58,39 +67,62 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 	 * The first element of the array list is the current renter.
 	 * The next elements are the employees waiting for renting this car. 
 	 */
-	HashMap<Long, ArrayList<IEmployee>> rentalWaitingList;
+	HashMap<Integer, ArrayList<IEmployee>> rentalWaitingList;
+	
+	/**
+	 * The manager of the vehicles database connection.
+	 */
+	VehiclesDBManager mysqlManager;
 	
 	/**
 	 * Initializes a new vehicle park rental module and load some vehicles.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public VehicleParkRentalManagement() throws RemoteException {
-		park = new HashMap<Long,IVehicle>();
+	public RentalManager() throws RemoteException {
 		
-		rentalWaitingList = new HashMap<Long, ArrayList<IEmployee>>();
+		mysqlManager = new VehiclesDBManager();
+
+		// Loads vehicles from database
+		this.park = mysqlManager.loadVehicles();
 		
-		rentalWaitingList = new HashMap<Long, ArrayList<IEmployee>>();
+		/* REMOVE THE COMMENT IF YOU DON'T WANT TO USE DATABASE */
+/*		Vehicle v = new Vehicle(1,"Renault", "Clio", 2020, 5, "Diesel", "Manual", 24000);
+		park.put(Integer.valueOf(v.getId()),v);
+		v = new Vehicle(2, "Renault", "Clio", 2019, 5, "Gas", "Manual", 20000);
+		park.put(Integer.valueOf(v.getId()),v);
+		v = new Vehicle(3,"Peugeot", "208", 2020, 5, "Gas", "Automatic", 23000);
+		park.put(Integer.valueOf(v.getId()),v);
+		v = new Vehicle(4, "Peugeot", "308", 2019, 5, "Gas", "Manual", 21000);
+		park.put(Integer.valueOf(v.getId()),v);
+		v = new Vehicle(5, "Renault", "Twingo", 2019, 4, "Gas", "Manual", 16000);
+		park.put(Integer.valueOf(v.getId()),v);
+*/
 		
-		vehicleCounterForUniqueId = 0;
-		
-		loadVehicles();
+		initializeWaitingList();
 		
 		initializeEmailProtocol();
 
 	}
 	
 	/**
-	 * Loads a panel of vehicles.
+	 * Initializes the waiting lists for each vehicle (empty). rentalWaitingList is indexed by the id of the vehicle
+	 * and contains an ArrayList of IEmployee objects.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public void loadVehicles() throws RemoteException {		
-		addVehicle("Renault", "Clio", 2020, 5, "Diesel", "Manual", 24000);
-		addVehicle("Renault", "Clio", 2019, 5, "Gas", "Manual", 20000);
-		addVehicle("Peugeot", "208", 2020, 5, "Gas", "Automatic", 23000);
-		addVehicle("Peugeot", "308", 2019, 5, "Gas", "Manual", 21000);
-		addVehicle("Renault", "Twingo", 2019, 4, "Gas", "Manual", 16000);
+	void initializeWaitingList() throws RemoteException {
+	
+		rentalWaitingList = new HashMap<Integer, ArrayList<IEmployee>>();
+		
+		Collection<IVehicle> vehicles = park.values();
+		Iterator<IVehicle> it = vehicles.iterator();
+		while (it.hasNext()) {
+			IVehicle v = it.next();
+			
+			rentalWaitingList.put(Integer.valueOf(v.getId()), new ArrayList<IEmployee>());
+		}
+	
 	}
-
+	
 
 	/**
 	 * Returns the list of vehicles available for rental (all the cars in the park are "available" for rental.
@@ -141,16 +173,16 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
-	public int rentVehicle(IEmployee employee, long vehicleId) throws RemoteException {
-		IVehicle v = park.get(Long.valueOf(vehicleId));
+	public int rentVehicle(IEmployee employee, int vehicleId) throws RemoteException {
+		IVehicle v = park.get(Integer.valueOf(vehicleId));
 		String msg = "";
 		// If no vehicle found with this id, return 
 		if (v == null) {
 			try {
 				msg = "Hi "+employee.getIdentifier()+"!\n\n We are SORRY but this vehicle can not be rented !";
-				System.out.println(" DANS RENTCAR 1 : "+msg);
 				notifyEmployee(employee, v, "IMPORTANT : Rental message", msg);
 			} catch (MessagingException e) {
+				
 				System.out.println("ERROR IN EMPLOYEE NOTIFICATION ***");
 				System.out.println("Unable to send an email with following message :");
 				System.out.println(msg);
@@ -161,7 +193,7 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 		}
 		else {
 			
-			List<IEmployee> rentersList = rentalWaitingList.get(Long.valueOf(vehicleId));
+			List<IEmployee> rentersList = rentalWaitingList.get(Integer.valueOf(vehicleId));
 			
 			// Adds the employee to the rental list.
 			rentersList.add(employee);
@@ -171,9 +203,9 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 				v.rentCar();
 				try {
 					msg = "Hi "+employee.getIdentifier()+"!\n\n You have rented this vehicle of id "+vehicleId+" ! Enjoy its use !!!";
-					System.out.println(" DANS RENTCAR 2 : "+msg);
 					notifyEmployee(employee, v, "IMPORTANT : Rental message", msg);
 				} catch (MessagingException e) {
+					
 					System.out.println("ERROR IN EMPLOYEE NOTIFICATION ***");
 					System.out.println("Unable to send an email with following message :");
 					System.out.println(msg);
@@ -186,9 +218,9 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 			else {
 				try {
 					msg = "Hi "+employee.getIdentifier()+"!\n\n Unfortunately, the car num "+vehicleId+" is already rented.\n You have been added to the waiting list and will be notified as soon as the vehicle is available.";
-					System.out.println(" DANS RENTCAR 3 : "+msg);
 					notifyEmployee(employee, v, "IMPORTANT : Rental message", msg);
 				} catch (MessagingException e) {
+					
 					System.out.println("ERROR IN EMPLOYEE NOTIFICATION ***");
 					System.out.println("Unable to send an email with following message :");
 					System.out.println(msg);
@@ -220,7 +252,7 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 
 
 		mailSession = Session.getDefaultInstance(props, null);
-		mailSession.setDebug(sessionDebug);	
+//		mailSession.setDebug(sessionDebug);	
 		
 	}
 	
@@ -248,7 +280,6 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 
 		try {
 		    transport.sendMessage(msg, msg.getAllRecipients());
-		    System.out.println("Send Success");
 		   }
 
 		catch (Exception err) {
@@ -266,13 +297,13 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
-	public void returnCar(long vehicleid, int note, String conditionOfReturn) throws RemoteException {
-		List<IEmployee> rentersList = rentalWaitingList.get(Long.valueOf(vehicleid));
+	public void returnCar(int vehicleid, int note, String conditionOfReturn) throws RemoteException {
+		List<IEmployee> rentersList = rentalWaitingList.get(Integer.valueOf(vehicleid));
 		
 		// Removes the current employee renter from the rental list ; it corresponds to the first element of the list	
 		rentersList.remove(0);
 		
-		IVehicle veh = park.get(Long.valueOf(vehicleid));
+		IVehicle veh = park.get(Integer.valueOf(vehicleid));
 		veh.returnCar(note, conditionOfReturn);
 		
 		if (! rentersList.isEmpty()) {
@@ -283,10 +314,10 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 			
 			String msg = "";
 			try {
-				msg = "Car number "+vehicleid+" has been returned. You are now rented it. Enjoy !!!!";
-				System.out.println(" DANS RETURNCAR : "+msg);
+				msg = "Hello "+empl.getIdentifier()+". Car number "+vehicleid+" has been returned. You are now rented it. Enjoy !!!!";
 				notifyEmployee(empl, veh, "IMPORTANT : Rental message", msg);
 			} catch (MessagingException e) {
+				
 				System.out.println("ERROR IN EMPLOYEE NOTIFICATION ***");
 				System.out.println("Unable to send an email with following message :");
 				System.out.println(msg);
@@ -304,32 +335,10 @@ public class VehicleParkRentalManagement extends UnicastRemoteObject implements 
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
-	public boolean sellVehicle(long vehId) throws RemoteException {
+	public boolean sellVehicle(int vehId) throws RemoteException {
 		if (rentalWaitingList.remove(vehId) != null && park.remove(vehId) != null)
 			return true;
 		else return false;
 	}
 	
-	/**
-	 * Adds a new vehicle in the park given its attributes
-	 * @param make the make of the vehicle
-	 * @param model the model of the vehicle
-	 * @param year the year of the vehicle
-	 * @param seatingCapacity the number of seats of the vehicle
-	 * @param fuelType the fuel type of the vehicle
-	 * @param transmission the transmission of the vehicle
-	 * @param priceInEuros the price of the vehicle
-	 * @throws RemoteException may occur as this object will be used in remote method call.
-	 */
-	public void addVehicle(String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException {
-		Vehicle v = new Vehicle(this.vehicleCounterForUniqueId, make, model, year, seatingCapacity, fuelType, transmission, priceInEuros);
-
-		park.put(Long.valueOf(this.vehicleCounterForUniqueId),v);
-		
-		rentalWaitingList.put(Long.valueOf(this.vehicleCounterForUniqueId), new ArrayList<IEmployee>());
-		
-		vehicleCounterForUniqueId++;
-			
-	}
-
 }

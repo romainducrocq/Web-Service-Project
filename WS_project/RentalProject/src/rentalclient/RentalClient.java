@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import employeedb.Employee;
+import employees.Employee;
 import shared.IEmployee;
 import shared.IEmployeeDB;
 import shared.IVehicle;
@@ -29,7 +29,7 @@ public class RentalClient {
 						
 			System.out.println("Dans RENTAL CLIENT *******************************************");
 			
-			System.out.println("Is Natacha an employee ? "+employeeDB.isEmployee("Natacha"));
+/*			System.out.println("Is Natacha an employee ? "+employeeDB.isEmployee("Natacha"));
 			System.out.println("Is Olie an employee ? "+employeeDB.isEmployee("Olie"));
 			
 			IEmployee nat = employeeDB.getEmployee("Natacha");
@@ -56,7 +56,7 @@ public class RentalClient {
 
 			listVehicle = rentalMgt.getAvailableVehiclesForRental();
 			displayListVehicles(listVehicle);
-
+*/
 		}
 		catch (MalformedURLException me) {
 			me.printStackTrace();

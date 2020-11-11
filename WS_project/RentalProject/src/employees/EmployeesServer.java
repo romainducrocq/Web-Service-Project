@@ -1,4 +1,4 @@
-package employeedb;
+package employees;
 
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -10,12 +10,12 @@ import java.rmi.registry.LocateRegistry;
  * @author Natacha
  *
  */
-public class EmployeeDBServer {
+public class EmployeesServer {
 
 	public static void main(String[] args) {
 		try {
 			
-			EmployeeDB employeeDB = new EmployeeDB();
+			EmployeesManager employeeDB = new EmployeesManager();
 
 			LocateRegistry.createRegistry(2000);
 			Naming.rebind("//localhost:2000/employeeDB", employeeDB);

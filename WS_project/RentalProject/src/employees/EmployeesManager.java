@@ -1,4 +1,4 @@
-package employeedb;
+package employees;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,7 +12,7 @@ import shared.IEmployeeDB;
  * @author Natacha
  *
  */
-public class EmployeeDB extends UnicastRemoteObject implements IEmployeeDB {
+public class EmployeesManager extends UnicastRemoteObject implements IEmployeeDB {
 
 	/**
 	 * Serial version UUID
@@ -25,31 +25,31 @@ public class EmployeeDB extends UnicastRemoteObject implements IEmployeeDB {
 	HashMap<String, IEmployee> employeeDB;
 	
 	/**
+	 * The manager of the connection to the database of employees.
+	 */
+	DBManager mysqlManager;
+	
+	/**
 	 * Default constructor.
 	 * Creates some employees and adds them to the hashmap.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public EmployeeDB() throws RemoteException {
-		this.employeeDB = new HashMap<String, IEmployee>();
+	public EmployeesManager() throws RemoteException {
 		
-		Employee nat = new Employee("Natacha","GRUMBACH","ngrumbach","password","ngrumbach@gmail.com");
+		mysqlManager = new DBManager();
+
+		// Loads employees from database
+		this.employeeDB = mysqlManager.loadEmployees();
+		
+		/* REMOVE COMMENT IF YOU DON'T WANT TO USE DATABASE.*/
+/*		Employee nat = new Employee("Natacha","GRUMBACH","ngrumbach","password","ngrumbach@gmail.com");
 		Employee romain = new Employee("Romain","DUCROCQ","rducrocq","password","ngrumbach@gmail.com");
 		Employee alex = new Employee("Alexandre","THEROND","atherond","password","ngrumbach@gmail.com");
 		
 		employeeDB.put(nat.getIdentifier(), nat);
 		employeeDB.put(romain.getIdentifier(), romain);
 		employeeDB.put(alex.getIdentifier(), alex);
-		
-	}
-
-	/**
-	 * Checks if an employee with this identifier is part of the employee database.
-	 * @param id the employee identifier
-	 * @throws RemoteException may occur as this object will be used in remote method call.
-	 */
-	@Override
-	public boolean isEmployee(String id) throws RemoteException {
-		return (employeeDB.get(id) != null);
+*/			
 	}
 	
 	/**
@@ -61,6 +61,7 @@ public class EmployeeDB extends UnicastRemoteObject implements IEmployeeDB {
 	 */
 	@Override
 	public boolean isEmployee(String userName, String pwd) throws RemoteException {
+		
 		IEmployee empl = employeeDB.get(userName);
 		
 		if  (empl != null) {

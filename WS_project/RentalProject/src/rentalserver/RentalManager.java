@@ -123,6 +123,16 @@ public class RentalManager extends UnicastRemoteObject implements IVehicleParkRe
 	
 	}
 	
+	/**
+	 * 
+	 * @param vehicleid the vehicle unique identifier. 
+	 * @return the vehicle with unique vehicleid.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	@Override
+	public IVehicle getVehicleById(int vehicleid) throws RemoteException{
+		return this.park.get(Integer.valueOf(vehicleid));
+	}
 
 	/**
 	 * Returns the list of vehicles available for rental (all the cars in the park are "available" for rental.

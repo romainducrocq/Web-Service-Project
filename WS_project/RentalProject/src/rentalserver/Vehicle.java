@@ -80,6 +80,11 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	 */
 	List<String> conditions;
 	
+	/**
+	 * An URL of the car image.
+	 */
+	String imgUrl;
+	
 
 	/**
 	 * Creates a default car (Renault, Clio of 2020, 5 seats, diesel, manual transmission, 18000 EUR).
@@ -102,6 +107,8 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 		notes = new ArrayList<Integer>();
 		conditions = new ArrayList<String>();
 		
+		this.imgUrl = "https://images.unsplash.com/photo-1571127236794-81c0bbfe1ce3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80";
+		
 	}
 	
 	/**
@@ -114,9 +121,13 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 	 * @param fuelType the fuel type of the vehicle
 	 * @param transmission the transmission type of the vehicle
 	 * @param priceInEuros the price in Euros for this vehicle
+	 * @param imgUrl the url of the image
+	 * @param allNotes the list of previous notes
+	 * @param lastMessage the last message
+	 * @param availableForSale is available for sale
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
-	public Vehicle(int id, String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros) throws RemoteException {
+	public Vehicle(int id, String make, String model, int year, int seatingCapacity, String fuelType, String transmission, float priceInEuros, String imgUrl, String allNotes, String lastMessage, boolean availableForSale) throws RemoteException {
 		this.uniqueId = id;
 		this.make = make;
 		this.model = model;
@@ -126,11 +137,22 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 		this.transmission = transmission;
 		this.priceInEuros = priceInEuros;
 		
-		this.availableForRent = true;
-		this.availableForSale = false;
+		this.imgUrl = ((imgUrl.length() > 0) ? imgUrl : "https://images.unsplash.com/photo-1571127236794-81c0bbfe1ce3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80");
 		
-		notes = new ArrayList<Integer>();
-		conditions = new ArrayList<String>();
+		this.availableForRent = !availableForSale;
+		this.availableForSale = availableForSale;
+		
+		this.notes = new ArrayList<Integer>();
+    	if(allNotes.length() > 0) {
+	    	for(int i = 0; i < allNotes.length(); i++) {
+	    		this.notes.add(Character.getNumericValue(allNotes.charAt(i)));
+	    	}	
+    	}
+		
+		this.conditions = new ArrayList<String>();
+    	if(lastMessage.length() > 0) {
+    		this.conditions.add(lastMessage);
+    	}
 	}
 	
 	/**
@@ -366,8 +388,8 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 		while (it.hasNext()) {
 			sum += (int) it.next();
 		}
-		
-		return sum/notes.size();
+				
+		return (float)sum/notes.size();
 	}
 	
 	/**
@@ -386,6 +408,26 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 		displayString = displayString+" Last comment : "+getLastCondition();
 		
 		return displayString;
+	}
+	
+	/**
+	 * Getter for the image url of the vehicle.
+	 * @return the url of the image.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	@Override
+	public String getImgUrl() throws RemoteException {
+		return this.imgUrl;
+	}
+
+	/**
+	 * Setter for the image url of the vehicle.
+	 * @param the url of the image.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	@Override
+	public void setImgUrl(String imgUrl) throws RemoteException {
+		this.imgUrl = imgUrl;
 	}
 	
 

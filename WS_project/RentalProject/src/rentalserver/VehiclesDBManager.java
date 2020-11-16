@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import shared.IVehicle;
 
@@ -63,9 +65,13 @@ public class VehiclesDBManager {
 		    	String fuelType = rs.getString("fuel_type");		    	    
 		    	String transmission = rs.getString("transmission");	
 		    	float price = rs.getFloat("price_euros");
-		    	
-		    	IVehicle veh = new Vehicle(id, make, model, year, seatingCapacity, fuelType, transmission, price);
-		    	
+		    	String imgUrl = rs.getString("img_url");
+		    	String allNotes = rs.getString("all_notes");
+		    	String lastMessage = rs.getString("last_message");
+		    	boolean availableForSale = (rs.getInt("available_for_sale") > 0);
+		    			    	
+			    IVehicle veh = new Vehicle(id, make, model, year, seatingCapacity, fuelType, transmission, price, imgUrl, allNotes, lastMessage, availableForSale);
+		    			    	
 		    	vehiclesDB.put(Integer.valueOf(id), veh);
 		    }
 		    

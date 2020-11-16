@@ -15,13 +15,13 @@ Créer un nouveau Web Dynamic ProjectDans le répertoire src, créer 4 packages 
 
 Récupérer les fichiers java de Git et les copier dans chaque package.
 
-Récupérer tous les fichiers du répertoire WEB-INF (.jsp et .html) et les copier dans votre répertoire WEB-INF.
+Récupérer tous les fichiers du répertoire WEB-INF (.jsp et .html) et les copier dans votre répertoire WEB-INF.
 
 Dans le Build Path (bouton droit sur le projet, Add Build Path), ajouter le path vers le jar javax.mail.jar (Add external JAR files).
 
 Choisir le JDK 1.8.
 
-Dans le menu Run >  Run configurations, vous ajoutez 2 "run configurations" (une pour chaque JVM) :
+Dans le menu Run >  Run configurations, vous ajoutez 2 "run configurations" (une pour chaque JVM) :
 - une pour la classe RentalServer
 - une pour la classe EmployeeDBServer
 
@@ -41,7 +41,7 @@ Pour rappel, pour le moment, 3 employés sont créés :
 - atherond
 avec comme password pour tous : "password" et mon adresse mail (vous pouvez mettre votre adresse pour tester et ne pas saturer ma boîte mail... ;)(fichier EmployeeDB.java).
 
-Les véhicules sont identifiés par leur id unique. 5 véhicules sont actuellement créés avec des ids de 0 à 5. Quand vous retournez un véhicule, vous devez donner ce numéro.
+Les véhicules sont identifiés par leur id unique. 5 véhicules sont actuellement créés avec des ids de 0 à 5. Quand vous retournez un véhicule, vous devez donner ce numéro.
 
 Je crois n'avoir rien oublié, dites moi si ça fonctionne...
 
@@ -49,31 +49,27 @@ Good luck !
 
 ## Ifs Cars Service, @Romain
 
-Idem que pour le rental project, créer un Dynamic Web Service IfsCarsService.
+1. Idem que pour le rental project, créer un Dynamic Web Service IfsCarsService.
 
-Récupérer les fichiers java du /src et les jsp du /Webcontent/WEB-INF dans git, et les placer au bon endroit dans le WS.
-Il y a 4 servlets et 4 jsp, une paire pour chaque page du client.
+2. Récupérer les fichiers java du /src et les jsp du /Webcontent/WEB-INF dans git, et les placer au bon endroit dans le WS. Il y a 4 servlets et 4 jsp, une paire pour chaque page du client.
 
-Mettre à jour RentalProject, j'ai modifié les fichiers (voir plus bas la liste des changements, ou directement dans la magie de github):
-- RentalManager.java
-- Vehicle.java
-- VehiclesDBManager.java
-- IVehicle.java
-- IVehicleParkRentalManagement.java
+3. Mettre à jour RentalProject, j'ai modifié les fichiers (voir plus bas la liste des changements, ou directement dans la magie de github):
+    - RentalManager.java
+    - Vehicle.java
+    - VehiclesDBManager.java
+    - IVehicle.java
+    - IVehicleParkRentalManagement.java
 
-Charger absolument le nouveau createDB.sql, j'ai changé la table des vehicles!
-(j'ai mis un removeDB.sql pour faire un clean delete de l'ancienne DB.)
+4. Charger absolument le nouveau createDB.sql, j'ai changé la table des vehicles! (j'ai mis un removeDB.sql pour faire un clean delete de l'ancienne DB.)
 
-Le WS ne dépend que de RentalServer, pas besoin de lancer EmployeeServer pour tester.
-(Il y a un main vide dans IfsCarsService, il ne sert à rien mais je le laisse comme espace de test.)
+5. Le WS ne dépend que de RentalServer, pas besoin de lancer EmployeeServer pour tester. (Il y a un main vide dans IfsCarsService, il ne sert à rien mais je le laisse comme espace de test.)
 
-Le WS se trouve à l'adresse **http://localhost:8080/IfsCarsService/index**
-Toutes les autres pages du webservice redirigent vers celle-là si vous tentez d'y accéder par url, donc vous devez suivre le parcours utilisateur (welcome/shop/payment/done).
-(pour faciliter le parcours, on peux désactiver la vérif de validité des infos de paiement en tapant nocheck() dans la console du navigateur (ctrl+shift+k)).
-**ATTENTION: j'ai codé sur firefox, je ne garantie pas la compatibilité avec d'autres navigateurs !!!**
+6. Le WS se trouve à l'adresse **http://localhost:8080/IfsCarsService/index**
+    - Toutes les autres pages du webservice redirigent vers celle-là si vous tentez d'y accéder par url, donc vous devez suivre le parcours utilisateur (welcome/shop/payment/done).
+    - (pour faciliter le parcours, on peux désactiver la vérif de validité des infos de paiement en tapant nocheck() dans la console du navigateur (ctrl+shift+k)).
+    - **ATTENTION: j'ai codé sur firefox, je ne garantie pas la compatibilité avec d'autres navigateurs !!!**
 
-J'ai aussi mis un script bash stoprmi.sh, qui tue les ports rmi 1099 et 2000. 
-(Pour faciliter les tests de DB, quand il faut relancer les serveurs rmi.)
+7. J'ai aussi mis un script bash stoprmi.sh, qui tue les ports rmi 1099 et 2000. (Pour faciliter les tests de DB, quand il faut relancer les serveurs rmi.)
 
 **@Natacha**
 Modifs de tes fichiers: 
@@ -95,10 +91,13 @@ Modifs de tes fichiers:
 J'ai besoin des 3 methodes suivantes de la banque:
 1. Une méthode pour récupérer la liste de toutes les actives currencies (un long string de la forme "EUR","JPY","USD"...... , que je parse apres):
 > //Get active currencies
+
 > List<String> currencies = Arrays.asList(currencySystem.activeCurrencies("").split(";"));
 2. Une méthode pour récupérer un taux de change en fonction de 1 EUR:
 > //Get exchange rates
+
 > String currency = "USD";
+
 > double exchangerate = (double)currencySystem.convert("", "EUR", currency, (double)1, false, "", CurncsrvReturnRate.curncsrvReturnRateNumber, "", "");
 3. une méthode qui prend les infos de paiement et qui renvoie un booléen (le paiement est accepté ou non), j'ai implémenté les infos de paiements suivantes:
 	- prix en euro
@@ -108,9 +107,9 @@ J'ai besoin des 3 methodes suivantes de la banque:
 	- numéro de CB
 	- CVV
 	- date d'expiration (mois et année)
-	T'es pas obligé de tout prendre, mais tu peux jouer avec tout ca, genre i tu veux faire un DB de clients de la banque et les identifier par leurs infos bancaires.
+        - T'es pas obligé de tout prendre, mais tu peux jouer avec tout ca, genre si tu veux faire un DB de clients de la banque et les identifier par leurs infos bancaires.
 
-Dis moi quand les 3 méthodes sont pretes, j'aurai juste à les insérer dans les servlets (shopping pour la 1, payment pour les 2 et 3), rien ne doit changer dans le code normalement de mon côté.
+-    Dis moi quand les 3 méthodes sont pretes, j'aurai juste à les insérer dans les servlets (shopping pour la 1, payment pour les 2 et 3), rien ne doit changer dans le code normalement de mon côté.
 
 A+, bonne lecture de mon javascript de la saleté.
 

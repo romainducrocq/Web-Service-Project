@@ -62,7 +62,7 @@ Good luck !
 
 4. Charger absolument le nouveau createDB.sql, j'ai changé la table des vehicles! (j'ai mis un removeDB.sql pour faire un clean delete de l'ancienne DB.)
 
-5. Le WS ne dépend que de RentalServer, pas besoin de lancer EmployeeServer pour tester. (Il y a un main vide dans IfsCarsService, il ne sert à rien mais je le laisse comme espace de test.)
+5. Run RentalServer as java application, puis Run IfsCarsService/src/ifscarsservice/IfsCarsService.java on server. (Le WS ne dépend que de RentalServer, pas besoin de lancer EmployeeServer pour tester.)
 
 6. Le WS se trouve à l'adresse **http://localhost:8080/IfsCarsService/index**
     - Toutes les autres pages du webservice redirigent vers celle-là si vous tentez d'y accéder par url, donc vous devez suivre le parcours utilisateur (welcome/shop/payment/done).

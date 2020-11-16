@@ -113,35 +113,57 @@ J'ai besoin des 3 methodes suivantes de la banque:
 
 A+, bonne lecture de mon javascript de la saleté.
 
-## MySql
+****
 
-### Install mysql:
-> https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
+# Build project from scratch
 
-### Run mysql:
-- shell> service mysql start
-- shell> service mysql status
-- shell> service mysql stop
+- **shell>** mkdir Web-Service-Project && cd Web-Service-Project && mkdir WS_Project
+- **shell>** git init
+- **shell>** git remote add origin https://github.com/romainducrocq/Web-Service-Project.git 
+    > *(or git@github.com:romainducrocq/Web-Service-Project.git for ssh)*
+- **eclipse-jee>** run in workspace: /path/to/Web-Service-Project/WS_Project:
+- **eclipse-jee>** window > preferences > java > compiler > compiler compliance level > 1.8 > apply
+- **eclipse-jee>** window > preferences > java > installed jres > add > /path/to/jdk1.8.0_271 > select > apply and close
+- **eclipse-jee>** new > server > apache > tomcat v7.0 server > /path/to/apache-tomcat-7.0.106
+- **eclipse-jee>** new > dynamic web project: RentalProject
+- **eclipse-jee>** new > dynamic web project: IfsCarsService
+- **shell>** git pull origin master
+- **shell>** mysql --user="root" --password="1Rootpwd!" < createDB.sql
+    > *mysql config:*
+        > install: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
+        > shell> mysql -u root -p
+        > enter password:
+        > mysql> FLUSH PRIVILEGES;
+        > mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
+        > mysql> exit
+- **eclipse-jee>** RentalProject > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar}
+- **eclipse-jee>** IfsCarsService > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar} 
+- **eclipse-jee>** RentalProject > java resources > src > rentalserver > RentalServer.java > run as java application
+- **eclipse-jee>** RentalProject > java resources > src > employees > EmployeesServer.java > run as java application
+- **firefox>** http://localhost:8080/RentalProject/authenticate
+- **firefox>** http://localhost:8080/IfsCarsService/index
 
-### Configure mysql:
-> https://dev.mysql.com/doc/refman/8.0/en/resetting-permissions.html
+****
 
-- shell> mysql -u root -p
-- enter password:
-- mysql> FLUSH PRIVILEGES;
-- mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
-- mysql> exit
+**Useful commands**
 
-### Execute .sql files with mysql:
-> https://stackoverflow.com/questions/8940230/how-to-run-sql-script-in-mysql
+- *run mysql*
+    > shell> service mysql start
+    > shell> service mysql status
+    > shell> service mysql stop
+    > shell> mysql --user="root" --password="1Rootpwd!"
+    > mysql> SHOW DATABASES;
+- *delete db*
+    > **shell>** mysql --user="root" --password="1Rootpwd!" < removeDB.sql
+- *kill rmi*
+    > **shell>** ./stoprmi.sh
 
-- shell> mysql --user="root" --password="1Rootpwd!" < createDB.sql
+****
 
-### mysql-connector-java-8.0.21.jar
-> https://jar-download.com/artifacts/mysql/mysql-connector-java
+**Links**
+- github: https://github.com/romainducrocq/Web-Service-Project
+- eclipse-jee: https://www.eclipse.org/downloads/download.php?file=/oomph/epp/2020-09/R/eclipse-inst-jre-linux64.tar.gz
+- jdk1.8.0_271: https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
+- tomcat 7.0.106: https://tomcat.apache.org/download-70.cgi
+- mysql: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
 
-### Install mysql-workbench:
-- shell> snap install mysql-workbench-community
-
-### Run mysql-workbench:
-- shell> mysql-workbench-community

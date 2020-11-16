@@ -130,12 +130,12 @@ A+, bonne lecture de mon javascript de la saleté.
 - **shell>** git pull origin master
 - **shell>** mysql --user="root" --password="1Rootpwd!" < createDB.sql
     > *mysql config:*
-        > install: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
-        > shell> mysql -u root -p
-        > enter password:
-        > mysql> FLUSH PRIVILEGES;
-        > mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
-        > mysql> exit
+    install: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
+    shell> mysql -u root -p
+    enter password:
+    mysql> FLUSH PRIVILEGES;
+    mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';
+    mysql> exit
 - **eclipse-jee>** RentalProject > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar}
 - **eclipse-jee>** IfsCarsService > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar} 
 - **eclipse-jee>** RentalProject > java resources > src > rentalserver > RentalServer.java > run as java application
@@ -149,10 +149,10 @@ A+, bonne lecture de mon javascript de la saleté.
 
 - *run mysql*
     > shell> service mysql start
-    > shell> service mysql status
-    > shell> service mysql stop
-    > shell> mysql --user="root" --password="1Rootpwd!"
-    > mysql> SHOW DATABASES;
+    shell> service mysql status
+    shell> service mysql stop
+    shell> mysql --user="root" --password="1Rootpwd!"
+    mysql> SHOW DATABASES;
 - *delete db*
     > **shell>** mysql --user="root" --password="1Rootpwd!" < removeDB.sql
 - *kill rmi*

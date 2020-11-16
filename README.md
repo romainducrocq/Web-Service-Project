@@ -117,14 +117,14 @@ A+, bonne lecture de mon javascript de la saleté.
 
 # Build project from scratch
 
-- **shell>** mkdir Web-Service-Project && cd Web-Service-Project && mkdir WS_Project
+- **shell>** mkdir Web-Service-Project && cd Web-Service-Project && mkdir WS_project
 - **shell>** git init
 - **shell>** git remote add origin https://github.com/romainducrocq/Web-Service-Project.git 
     > *(or git@github.com:romainducrocq/Web-Service-Project.git for ssh)*
-- **eclipse-jee>** run in workspace: /path/to/Web-Service-Project/WS_Project:
+- **eclipse-jee>** run in workspace: /path/to/Web-Service-Project/WS_project:
 - **eclipse-jee>** window > preferences > java > compiler > compiler compliance level > 1.8 > apply
-- **eclipse-jee>** window > preferences > java > installed jres > add > /path/to/jdk1.8.0_271 > select > apply and close
-- **eclipse-jee>** new > server > apache > tomcat v7.0 server > /path/to/apache-tomcat-7.0.106
+- **eclipse-jee>** window > preferences > java > installed jres > add > standard vm > jre home > /path/to/jdk1.8.0_271 > finish > select checkbox > apply and close
+- **eclipse-jee>** new > server > apache > tomcat v7.0 server > /path/to/apache-tomcat-7.0.106 > finish
 - **eclipse-jee>** new > dynamic web project: RentalProject
 - **eclipse-jee>** new > dynamic web project: IfsCarsService
 - **shell>** git pull origin master
@@ -136,13 +136,19 @@ A+, bonne lecture de mon javascript de la saleté.
     > **mysql>** FLUSH PRIVILEGES;  
     > **mysql>** ALTER USER 'root'@'localhost' IDENTIFIED BY '1Rootpwd!';  
     > **mysql>** exit  
-- **eclipse-jee>** RentalProject > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar}
-- **eclipse-jee>** IfsCarsService > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar} 
-- **eclipse-jee>** RentalProject > java resources > src > rentalserver > RentalServer.java > run as java application
-- **eclipse-jee>** RentalProject > java resources > src > employees > EmployeesServer.java > run as java application
+- **eclipse-jee>** RentalProject > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/WS_project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar}
+- **eclipse-jee>** IfsCarsService > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/WS_project/{javax.mail.jar, javax.servlet-api-4.0.1.jar, mysql-connector-java-8.0.21.jar}
+- **eclipse-jee>** project > clean > clean all projects > clean
+- **eclipse-jee>** RentalProject > java resources > src > rentalserver > RentalServer.java > run as > java application
+- **eclipse-jee>** RentalProject > java resources > src > employees > EmployeesServer.java > run as > java application
+- **eclipse-jee>** window > show view > servers > tomcat v7.0 server at localhost > start
+- **eclipse-jee>** RentalProject > java resources > src > rentalclient > RentalClient.java > run as > run on server > tomcat v7.0 server at localhost
+- **eclipse-jee>** IfsCarsService > java resources > src > ifscarsservice > IfsCarsService.java > run as > run on server > tomcat v7.0 server at localhost
 - **firefox>** http://localhost:8080/RentalProject/authenticate
 - **firefox>** http://localhost:8080/IfsCarsService/index
-
+    >The server may need to be restarted multiple times on first deployment.  
+    >Repeat as many times as needed:  
+    >**eclipse-jee>** window > show view > servers > tomcat v7.0 server at localhost > restart
 ****
 
 **Useful commands**

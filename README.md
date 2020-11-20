@@ -87,7 +87,33 @@ Modifs de tes fichiers:
 - IVehicle.java et IVehicleParkRentalManagement.java:
 	- les interfaces correspondantes.
 
+
+## Bank, @Alexandre
+Pour utiliser le service Bank créer un nouveau projet dynamique et copier les fichers du git sous /src ou WEB-INF en fonction.
+Créer une nouvelle "Run configuration" à travers BankServer.
+Créer un Web Service Client au projet en utilisant l'url ci-dessous:
+	http://fx.currencysystem.com/webservices/CurrencyServer5.asmx?wsdl
+Pour lancer le service d'abord alummer le client BankServer puis lancer le projet sur un server tomcat.
+Enfin utiliser l'url ci dessous pour accéder au service:
+	http://localhost:8080/YOUR_PROJECT_NAME/Bank
+	
+**@Romain**
+
+Chaque banque possède sa devise de monnaie, lorsque qu'une banque est créée, une devise lui est associée.
+Aussi chaque banque possède :
+- Un ID, un numéro de carte bancaire avec date d'expiration, CVV, nom et prénom du propriétaire, la devise utilisé par la banque ainsi que le montant d'argent restant. 
+- une méthode, allCurrencies(), qui renvoit une liste de string de chacune des devises possibles.
+- trois méthodes de convertions, doGenericConvertion1euro(String currency), doConvertion1euro(), doConvertion(double amount):
+	La première est comme ton exemple, 1€ convertie dans la devise demandée
+	La deuxième convertie 1€ dans la devise de la banque
+	La dernière convertie X€ dans la devise de la banque
+- trois méthode de vérification d'information, checkEnoughBalance, checkBankDetails et canWithdraw:
+	La première vérifie si un montant en € peut être débité sur le compte
+	La deuxième vérifie si les informations bancaires passé en paramètre sont justes
+	La dernière combine les deux précédante et ne peut renvoyer TRUE que si les deux conditions sont vérifiées
+
 **@Alexandre**
+
 J'ai besoin des 3 methodes suivantes de la banque:
 1. Une méthode pour récupérer la liste de toutes les actives currencies (un long string de la forme "EUR","JPY","USD"...... , que je parse apres):
 > //Get active currencies

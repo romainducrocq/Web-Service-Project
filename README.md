@@ -104,13 +104,13 @@ Aussi chaque banque possède :
 - Un ID, un numéro de carte bancaire avec date d'expiration, CVV, nom et prénom du propriétaire, la devise utilisé par la banque ainsi que le montant d'argent restant. 
 - une méthode, allCurrencies(), qui renvoit une liste de string de chacune des devises possibles.
 - trois méthodes de convertions, doGenericConvertion1euro(String currency), doConvertion1euro(), doConvertion(double amount):
-	La première est comme ton exemple, 1€ convertie dans la devise demandée
-	La deuxième convertie 1€ dans la devise de la banque
-	La dernière convertie X€ dans la devise de la banque
+	- La première est comme ton exemple, 1€ convertie dans la devise demandée
+	- La deuxième convertie 1€ dans la devise de la banque
+	- La dernière convertie X€ dans la devise de la banque
 - trois méthode de vérification d'information, checkEnoughBalance, checkBankDetails et canWithdraw:
-	La première vérifie si un montant en € peut être débité sur le compte
-	La deuxième vérifie si les informations bancaires passé en paramètre sont justes
-	La dernière combine les deux précédante et ne peut renvoyer TRUE que si les deux conditions sont vérifiées
+	- La première vérifie si un montant en € peut être débité sur le compte
+	- La deuxième vérifie si les informations bancaires passé en paramètre sont justes
+	- La dernière combine les deux précédante et ne peut renvoyer TRUE que si les deux conditions sont vérifiées
 
 **@Alexandre**
 

@@ -60,14 +60,16 @@
 - **eclipse-jee>** Bank > properties > java build path > libraries > add external jars > /path/to/Web-Service-Project/WS_project/mysql-connector-java-8.0.21.jar
 - **eclipse-jee>** Bank > properties > deployment assembly > add > java build path entries > mysql-connector-java-8.0.21.jar
 - **eclipse-jee>** Bank > new > web service client > Service definition: http://fx.currencysystem.com/webservices/CurrencyServer5.asmx?wsdl > finish
-- **eclipse-jee>** project > clean > clean all projects > clean
+- **eclipse-jee>** project > clean > {RentalProject, Bank} > clean
 - **eclipse-jee>** Bank > new > web service > Service implementation > Browse: BankManager > ok > finish
 - **eclipse-jee>** IfsCarsService > new > web service client > Service definition: http://localhost:8080/Bank/services/BankManager?wsdl > finish
+- **eclipse-jee>** project > clean > IfsCarsService > clean
 - **eclipse-jee>** RentalProject > java resources > src > rentalserver > RentalServer.java > run as > java application
 - **eclipse-jee>** RentalProject > java resources > src > employees > EmployeesServer.java > run as > java application
 - **eclipse-jee>** window > show view > servers > tomcat v7.0 server at localhost > start
 - **eclipse-jee>** RentalProject > run as > run on server > tomcat v7.0 server at localhost
 - **eclipse-jee>** IfsCarsService > run as > run on server > tomcat v7.0 server at localhost
+- **eclipse-jee>** Bank > run as > run on server > tomcat v7.0 server at localhost
 - **firefox>** http://localhost:8080/RentalProject/authenticate
 - **firefox>** http://localhost:8080/IfsCarsService/index
     >The server may need to be restarted multiple times on first deployment.  

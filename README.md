@@ -96,21 +96,6 @@
 - jdk1.8.0_271: https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
 - tomcat 7.0.106: https://tomcat.apache.org/download-70.cgi
 - mysql: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
-    > **shell>** sudo mysql --user="root" --password="1Rootpwd!"  
-    > **mysql>** SHOW DATABASES;  
-- *delete db*
-    > **shell>** mysql --user="root" --password="1Rootpwd!" < WS_project/removeDB.sql
-- *kill rmi*
-    > **shell>** WS_project/stoprmi.sh
-
-****
-
-**Links**
-- github: https://github.com/romainducrocq/Web-Service-Project
-- eclipse-jee: https://www.eclipse.org/downloads/download.php?file=/oomph/epp/2020-09/R/eclipse-inst-jre-linux64.tar.gz
-- jdk1.8.0_271: https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
-- tomcat 7.0.106: https://tomcat.apache.org/download-70.cgi
-- mysql: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/
 
 ## Rental Project, @Natacha
 

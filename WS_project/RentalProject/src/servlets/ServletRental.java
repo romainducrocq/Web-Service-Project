@@ -50,6 +50,10 @@ public class ServletRental extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		RequestDispatcher dispatcher;		
+		dispatcher = request.getRequestDispatcher("/WEB-INF/employeeauthentification.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 	/**

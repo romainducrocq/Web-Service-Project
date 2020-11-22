@@ -1,2 +1,3 @@
 DROP DATABASE employeeDB;
 DROP DATABASE vehiclesDB;
+DROP DATABASE bankDB;

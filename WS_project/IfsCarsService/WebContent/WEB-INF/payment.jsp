@@ -409,7 +409,7 @@
 	    		v.push(cart[c].id);
 	    	}
 	    	
-	    	post("<%= request.getContextPath() %>/payment", { action: a, vehicles: v, currency: currencyDropdown.value(), name: name_, cardnumber: cardnumber_, cvv: cvv_, expiracydate: date_ } );
+	    	post("<%= request.getContextPath() %>/payment", { action: a, vehicles: v, currency: currencyDropdown.value(), name: name_, cardnumber: cardnumber_, cvv: cvv_, expiracydate: date_, price: totalPrice } );
 	    }
 	    
 	  	function nocheck(){

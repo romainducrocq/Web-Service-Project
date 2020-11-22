@@ -51,11 +51,11 @@ public class ServletAuthentification extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		response.getWriter().append("Served at :").append(request.getContextPath());
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/employeeauthentification.jsp");
+		RequestDispatcher dispatcher;		
+		dispatcher = request.getRequestDispatcher("/WEB-INF/employeeauthentification.jsp");
 		dispatcher.forward(request, response);
+		
 	}
 
 	/**

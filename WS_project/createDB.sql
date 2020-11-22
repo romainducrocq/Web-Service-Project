@@ -1,3 +1,19 @@
+CREATE DATABASE bankDB;
+USE bankDB;
+CREATE TABLE bank (
+id INT AUTO_INCREMENT PRIMARY KEY,
+card_number varchar(20),
+cvv varchar(20),
+expiracy_date varchar(20),
+balance FLOAT,
+currency varchar(20),
+name varchar(255)
+);
+
+insert into bank(card_number, cvv, expiracy_date, balance, currency, name) values("0000111122223333", "4444", "May;2025", 30000.0, "USD", "Janis;Joplin");
+insert into bank(card_number, cvv, expiracy_date, balance, currency, name) values("0123012301230123", "0123", "January;2021", 500000.0, "PLN", "Kurt;Cobain");
+insert into bank(card_number, cvv, expiracy_date, balance, currency, name) values("0123456789101112", "1314", "December;2023", 60000.0, "EUR", "Jimi;Hendrix");
+
 CREATE DATABASE employeeDB;
 USE employeeDB;
 CREATE TABLE employee (

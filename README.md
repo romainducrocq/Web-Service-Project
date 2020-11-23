@@ -68,10 +68,10 @@
 - **eclipse-jee>** IfsCarsService > new > web service client > Service definition: http://localhost:8080/Bank/services/BankManager?wsdl > finish
 - **eclipse-jee>** project > clean > IfsCarsService > clean
 - **eclipse-jee>** IfsCarsService > new > web service > Service implementation > Browse: IfsCarsService > ok > finish
-- **eclipse-jee>** IfsCarsService > webcontent > web-inf > server-config.wsdd > source > add: **<parameter name="scope" value="session"/>** :
+- **eclipse-jee>** IfsCarsService > webcontent > web-inf > server-config.wsdd > source > add session scope:
     > <ns1:service name="IfsCarService" provider="java:RPC" style="wrapped" use="literal">  
     > ...  
-    > INSERT HERE  
+    > &lt;parameter name="scope" value="session"/&gt;  
     > </ns1:service>  
 - **eclipse-jee>** IfsCarsServiceClient > new > web service client > Service definition: http://localhost:8080/IfsCarsService/services/IfsCarService?wsdl > finish
 - **eclipse-jee>** project > clean > IfsCarsServiceClient > clean

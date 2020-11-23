@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ page import="ifscarsservice.Vehicle" %>
 <%@ page import="java.util.List" %>
-<%@ page import="shared.IVehicle" %>
 
- 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -97,10 +96,11 @@
 
 </head>
 <body>
+
+		<% Vehicle shoppingCart[] = (Vehicle[])request.getAttribute("shoppingCart"); %>
 		<% List<String> currencies = (List<String>)request.getAttribute("currencies"); %>
         <% String selectedCurrency = (String)request.getAttribute("selectedCurrency"); %>
         <% double exchangeRate = ((Double)request.getAttribute("exchangeRate")).doubleValue();%>
-        <% List<IVehicle> shoppingCart = (List<IVehicle>)request.getAttribute("shoppingCart"); %>
         
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f2f2f2;">
       <a class="navbar-brand nav-link disabled" href="#">
@@ -237,13 +237,13 @@
 	    
 	    function setup(){
 	    	
-	    	<%for(int i = 0; i < shoppingCart.size(); i++){%>
+	    	<%for(int i = 0; i < shoppingCart.length; i++){%>
 	    	cart[<%=i%>] = {
-		    	"id": "<%=shoppingCart.get(i).getId()%>",
-		    	"manufacturer": "<%=shoppingCart.get(i).getMake()%>",
-		    	"model": "<%=shoppingCart.get(i).getModel()%>",
-		    	"year": "<%=shoppingCart.get(i).getYear()%>",
-		    	"price": "<%=shoppingCart.get(i).getPriceInEuros()%>"
+		    	"id": "<%=shoppingCart[i].getId()%>",
+		    	"manufacturer": "<%=shoppingCart[i].getMake()%>",
+		    	"model": "<%=shoppingCart[i].getModel()%>",
+		    	"year": "<%=shoppingCart[i].getYear()%>",
+		    	"price": "<%=shoppingCart[i].getPrice()%>"
 		    };
     	<%}%>
     		

@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ page import="rentalclient.RentalClient" %>
+<%@ page import="ifscarsservice.Vehicle" %>
 
- 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -114,7 +113,7 @@
 
 </head>
 <body>
-		<% RentalClient parkMgt = (RentalClient)request.getAttribute("parkMgt"); %>
+		<% Vehicle vehiclesObj[] = (Vehicle[])request.getAttribute("vehicles"); %>
         
 	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f2f2f2;">
       <a class="navbar-brand nav-link disabled" href="#">
@@ -204,21 +203,21 @@
 	    
 	    function setup(){
 	    	
-	    	<%for(int i = 0; i < parkMgt.getParkMgt().getAvailableVehiclesForRental().size(); i++){%>
+	    	<%for(int i = 0; i < vehiclesObj.length; i++){%>
 		    	vehicles[<%=i%>] = {
-			    	"id": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getId()%>",
-			    	"manufacturer": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getMake()%>",
-			    	"model": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getModel()%>",
-			    	"year": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getYear()%>",
-			    	"seatingcapacity": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getSeatingCapacity()%>",
-			    	"fueltype": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getFuelType()%>",
-			    	"transmission": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getTransmission()%>",
-			    	"price": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getPriceInEuros()%>",
-			    	"available": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).isAvailableForSale()%>",
-			    	"lastmessage": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getLastCondition()%>",
-			    	"averagenote": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getAverageNote()%>",
-			    	"imgurl": "<%=parkMgt.getParkMgt().getAvailableVehiclesForRental().get(i).getImgUrl()%>"
-			    };
+			    	"id": "<%=vehiclesObj[i].getId()%>",
+			    	"manufacturer": "<%=vehiclesObj[i].getMake()%>",
+			    	"model": "<%=vehiclesObj[i].getModel()%>",
+			    	"year": "<%=vehiclesObj[i].getYear()%>",
+			    	"seatingcapacity": "<%=vehiclesObj[i].getSeatingCapacity()%>",
+			    	"fueltype": "<%=vehiclesObj[i].getFuelType()%>",
+			    	"transmission": "<%=vehiclesObj[i].getTransmission()%>",
+			    	"price": "<%=vehiclesObj[i].getPrice()%>",
+			    	"available": "<%=vehiclesObj[i].isAvailableForSale()%>",
+			    	"lastmessage": "<%=vehiclesObj[i].getLastMessage()%>",
+			    	"averagenote": "<%=vehiclesObj[i].getAverageNote()%>",
+			    	"imgurl": "<%=vehiclesObj[i].getImgUrl()%>"
+		    	};
 	    	<%}%>
 	    	
 	    	////TODO remove test values

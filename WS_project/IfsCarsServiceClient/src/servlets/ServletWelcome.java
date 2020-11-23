@@ -8,19 +8,27 @@ package servlets;
 	import javax.servlet.http.HttpServlet;
 	import javax.servlet.http.HttpServletRequest;
 	import javax.servlet.http.HttpServletResponse;
-
-	import rentalclient.RentalClient;
+	import javax.xml.rpc.ServiceException;
+	
+	import ifscarsservice.IfsCarService;
+	import ifscarsservice.IfsCarServiceServiceLocator;
+	import ifscarsservice.IfsCarServiceSoapBindingStub;
 	
 @WebServlet("/index")
 public class ServletWelcome extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private RentalClient parkMgt; 
+	private IfsCarService ifc = null; 
 	
     public ServletWelcome() {
     	super();
-    	this.parkMgt = new RentalClient();
-    }
+	    	try {
+				this.ifc = new IfsCarServiceServiceLocator().getIfsCarService();
+				((IfsCarServiceSoapBindingStub) this.ifc).setMaintainSession(true);
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}		
+        }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -33,7 +41,8 @@ public class ServletWelcome extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher dispatcher;
-		request.setAttribute("parkMgt", this.parkMgt);
+		
+		request.setAttribute("vehicles", this.ifc.getAllVehicleObj());
 		dispatcher = request.getRequestDispatcher("/WEB-INF/shop.jsp");
 		dispatcher.forward(request, response);
 	}

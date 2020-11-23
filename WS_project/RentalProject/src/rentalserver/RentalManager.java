@@ -314,7 +314,10 @@ public class RentalManager extends UnicastRemoteObject implements IVehicleParkRe
 		rentersList.remove(0);
 		
 		IVehicle veh = park.get(Integer.valueOf(vehicleid));
+		
 		veh.returnCar(note, conditionOfReturn);
+		
+		mysqlManager.updateVehicleAfterReturnRental(veh.getId(), veh.getAllNotes(), veh.getLastCondition(), true);
 		
 		if (! rentersList.isEmpty()) {
 			// Notify the first employee waiting for the car

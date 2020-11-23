@@ -3,6 +3,8 @@ package shared;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This interface defines the structure of a vehicle.
@@ -175,6 +177,13 @@ public interface IVehicle extends Remote {
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	public float getAverageNote() throws RemoteException;
+	
+	/**
+	 * Returns the list of notes.
+	 * @return the list of notes left by previous renters.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public List<Integer> getAllNotes() throws RemoteException;
 	
 	/**
 	 * Returns a String to display a vehicle using its attributes.

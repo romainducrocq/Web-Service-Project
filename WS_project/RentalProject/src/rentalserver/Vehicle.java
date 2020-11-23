@@ -430,5 +430,13 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 		this.imgUrl = imgUrl;
 	}
 	
+	/**
+	 * Returns the list of notes.
+	 * @return the list of notes left by previous renters.
+	 * @throws RemoteException may occur as this object will be used in remote method call.
+	 */
+	public List<Integer> getAllNotes() throws RemoteException {
+		return this.notes;
+	}
 
 }

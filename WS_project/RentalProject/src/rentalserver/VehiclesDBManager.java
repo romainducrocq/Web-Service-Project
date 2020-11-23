@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +82,39 @@ public class VehiclesDBManager {
 			e.printStackTrace();
 			return null;
 		}
+		
+	}
+	
+	/**
+	 * Updates the database after rental.
+	 * @param id the id of the rented vehicle
+	 * @param allNotes the notes
+	 * @param lastMessage the last message
+	 * @param availableForSale 
+	 */
+	public void updateVehicleAfterReturnRental(int id, List<Integer> allNotes, String lastMessage, boolean availableForSale) {
+		int availableForSaleInt = 1;
+		if (!availableForSale)
+			availableForSaleInt = 0;
+		
+		String notesStr = "";
+		
+		for (int i = 0; i < allNotes.size(); i++) {
+			notesStr += allNotes.get(i);
+		};
+		
+		System.out.println("Notes to str : "+notesStr);
+		
+		String sql = "update vehicle set all_notes="+notesStr+" and last_message="+lastMessage+" and available_for_sale="+availableForSaleInt+" where id="+id;
+
+	    try {
+	        Statement stmt = conn.createStatement();
+	        stmt.executeUpdate(sql);
+	        System.out.println("Database updated successfully for vehicle of id "+id);
+	        	
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
 		
 	}
 

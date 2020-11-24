@@ -9,6 +9,8 @@
     password: password  
 2. >username: rducrocq  
     password: password  
+3. >username: atherond  
+    password: password  
 
 **Bank**
 1. >balance: 30000  

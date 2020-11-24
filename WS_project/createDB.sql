@@ -28,6 +28,7 @@ email varchar(30)
 
 insert into employee(first_name, last_name, username, password, email) values('Natacha', 'GRUMBACH', 'ngrumbach','password','ngrumbach@gmail.com');
 insert into employee(first_name, last_name, username, password, email) values('Romain', 'DUCROCQ', 'rducrocq','password','romain.g.ducrocq@gmail.com');
+insert into employee(first_name, last_name, username, password, email) values('Alexandre', 'THEROND', 'atherond','password','alexandre.therond@efrei.net');
 
 
 CREATE DATABASE vehiclesDB;

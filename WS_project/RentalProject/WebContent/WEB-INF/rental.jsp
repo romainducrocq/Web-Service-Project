@@ -98,7 +98,6 @@
 					
 					<form action="<%= request.getContextPath() %>/rental" method="post">
 						<input type="hidden" name="employeeid" value=<%= request.getParameter("employeeid") %>>
-						<% System.out.println("---------- DANS RENTAL.JSP : employeeid ="+request.getParameter("employeeid")); %>
 							<select name="vehicleid">
 							<% List<IVehicle> vehiclesList = (List<IVehicle>)request.getAttribute("vehiclesList");
 							Iterator<IVehicle> it = vehiclesList.iterator();

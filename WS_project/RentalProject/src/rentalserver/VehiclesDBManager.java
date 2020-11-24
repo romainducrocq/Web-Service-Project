@@ -105,8 +105,10 @@ public class VehiclesDBManager {
 		
 		System.out.println("Notes to str : "+notesStr);
 		
-		String sql = "update vehicle set all_notes="+notesStr+" and last_message="+lastMessage+" and available_for_sale="+availableForSaleInt+" where id="+id;
+		String sql = "update vehicle set all_notes=\""+notesStr+"\", last_message=\""+lastMessage+"\", available_for_sale="+availableForSaleInt+" where id="+id;
 
+		System.out.println(sql);
+		
 	    try {
 	        Statement stmt = conn.createStatement();
 	        stmt.executeUpdate(sql);

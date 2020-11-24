@@ -93,8 +93,7 @@
 						<form action="<%= request.getContextPath() %>/rentorreturn" method="post">
 							<input type="hidden" name="employeeid" value=<%= request.getAttribute("employeeid") %>>
 							
-							<% System.out.println("---------- DANS RENTORRETURN.JSP : employeeid ="+request.getAttribute("employeeid")); %>
-							
+					
 							  <select name="rentorreturn">
 							    <option value="rent">Rent a vehicle</option>
 							    <option value="return">Return a vehicle</option>

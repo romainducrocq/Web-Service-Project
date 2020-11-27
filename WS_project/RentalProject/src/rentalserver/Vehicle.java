@@ -10,7 +10,6 @@ import shared.IVehicle;
 
 /**
  * The vehicle implementation class.
- * @author Natacha
  *
  */
 public class Vehicle extends UnicastRemoteObject implements IVehicle { 
@@ -422,7 +421,7 @@ public class Vehicle extends UnicastRemoteObject implements IVehicle {
 
 	/**
 	 * Setter for the image url of the vehicle.
-	 * @param the url of the image.
+	 * @param imgUrl the url of the image.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override

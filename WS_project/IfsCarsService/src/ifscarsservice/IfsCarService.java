@@ -18,17 +18,32 @@ import javax.xml.rpc.ServiceException;
 
 import bank.BankManagerServiceLocator;
 
+/**
+ * 
+ * The class who handles the implementation of IfsCarService Web Service.
+ *
+ */
 public class IfsCarService {
 	
+	/**
+	 * The connection to the MySQL database to get the vehicles.
+	 */
 	private Connection conn = null;
+	
+	/**
+	 * The set of ids of vehicles added to the shopping cart.
+	 */
     Set<Integer> cart = new HashSet<Integer>(); 
 	
+    /**
+     * Empty constructor
+     */
 	public IfsCarService() {
 	}
 	
 	/**
-	 * Init the connection to the mysql database
-	 * @return is connection successful
+	 * Initializes the connection to the mysql database.
+	 * @return true if the connection is successful
 	 */
 	private boolean initConnection() {
 		try {
@@ -44,8 +59,8 @@ public class IfsCarService {
 	//VEHICLES
 	
 	/**
-	 * 
-	 * @param availableForSale, false: all vehicles / true: only available for sale vehicles
+	 * Returns the list of identifiers of the vehicles available for sale or of all the vehicles depending on the given parameter.
+	 * @param availableForSale false: all vehicles / true: only available for sale vehicles
 	 * @return the Id list of all vehicles or of available for sale vehicles
 	 */
 	public int[] getVehicleIds(boolean availableForSale) {
@@ -88,10 +103,10 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the specified value for a vehicle of the given identifier. Creates and executes a request to the vehicles database.
 	 * @param id of the vehicle to return
 	 * @param param the value to return
-	 * @return the specified value for a vehicle
+	 * @return the specified value for a vehicle, null if there is a problem of connection with the DB.
 	 */
 	private String getVehicleValue(int id, String param) {
 		
@@ -121,7 +136,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the vehicle make given its id.
 	 * @param id of the vehicle
 	 * @return manufacturer of vehicle 
 	 */
@@ -130,7 +145,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the model of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return model of vehicle 
 	 */
@@ -139,7 +154,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the year of building of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return year of the vehicle
 	 */
@@ -148,7 +163,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the seating capacity of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return seating capacity of the vehicle
 	 */
@@ -157,7 +172,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returs the fuel type of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return fuel type of the vehicle
 	 */
@@ -166,7 +181,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the type of transmission of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return transmission of the vehicle
 	 */
@@ -174,7 +189,7 @@ public class IfsCarService {
 		return this.getVehicleValue(id, "transmission");
 	}	
 	
-	/**
+	/**Returns the price in EUR of the vehicle given its id.
 	 * 
 	 * @param id of the vehicle
 	 * @return price of the vehicle in euros
@@ -184,7 +199,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the nots that have been done by the previous renters to the vehicle given its id.
 	 * @param id ofthe vehicle
 	 * @return all notes of the vehicle
 	 */
@@ -193,7 +208,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the average of notes of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return average note of the vehicle
 	 */
@@ -212,7 +227,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the last message written by the last renter of the vehicle given its id.
 	 * @param id of the vehicle
 	 * @return last message of the vehicle 
 	 */
@@ -221,7 +236,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the URL of the vehicle corresponding to its picture.
 	 * @param id of the vehicle
 	 * @return image url of the vehicle
 	 */
@@ -231,7 +246,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns true if the vehicle of the given id is available for sale.
 	 * @param id of the vehicle
 	 * @return is vehicle available for sale
 	 */
@@ -240,7 +255,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns a vehicle given its id.
 	 * @param id of the vehicle
 	 * @return vehicle object
 	 */
@@ -262,7 +277,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the vehicles list with the given identifiers.
 	 * @param idList list of all ids 
 	 * @return all vehicle objects from id list
 	 */
@@ -276,7 +291,7 @@ public class IfsCarService {
 	}
 
 	/**
-	 * 
+	 * Returns all the vehicles.
 	 * @return all vehicle objects
 	 */
 	public Vehicle[] getAllVehicleObj() {
@@ -284,7 +299,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns all the vehicles available for sale.
 	 * @return all vehicles objects available for sale
 	 */
 	public Vehicle[] getVehicleObjAvailableForSale() {
@@ -292,7 +307,7 @@ public class IfsCarService {
 	}
 	
 	/**
-	 * 
+	 * Returns the vehicles of the shopping cart.
 	 * @return all vehicles objects in shopping cart
 	 */
 	public Vehicle[] getVehicleObjCart() {
@@ -303,7 +318,6 @@ public class IfsCarService {
 	
 	/**
 	 * Returns the price in the given currency.
-	 * @param priceInEuros a price in Euros
 	 * @param currency the currency
 	 * @return the price in the given currency.
 	 * @throws ServiceException 

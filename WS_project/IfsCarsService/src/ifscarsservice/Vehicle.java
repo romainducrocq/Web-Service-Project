@@ -1,5 +1,10 @@
 package ifscarsservice;
 
+/**
+ * Implementation of a vehicle used by the IfsCarsService Web Service.
+ * Contains a constructor to build a Vehicle object from database and getters methods.
+ *
+ */
 public class Vehicle implements java.io.Serializable {
 		
 	private static final long serialVersionUID = 1L;

@@ -7,7 +7,6 @@ import java.rmi.registry.LocateRegistry;
  * The rental server :
  * It creates and exports a Registry instance on the local host that accepts requests on the port 1099.
  * It creates a VehicleParkRentalManagement object and associate it with the name "rentalMgt".
- * @author Natacha
  *
  */
 public class RentalServer {

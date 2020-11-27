@@ -24,7 +24,6 @@ import shared.IVehicleParkRentalManagement;
 
 /**
  * Implementation of the vehicle park rental management module.
- * @author Natacha
  *
  */
 public class RentalManager extends UnicastRemoteObject implements IVehicleParkRentalManagement {
@@ -179,7 +178,7 @@ public class RentalManager extends UnicastRemoteObject implements IVehicleParkRe
 	 * Returns 	0 if the vehicle can not be rent (for example, it has been sold during the rental process),
 	 * 			1 if the vehicle can be rent,
 	 * 			2 if the vehicle is already rent and the employee will be put on a waiting list
-	 * @param id the vehicle unique identifier
+	 * @param vehicleId the vehicle unique identifier
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
@@ -261,8 +260,7 @@ public class RentalManager extends UnicastRemoteObject implements IVehicleParkRe
 		props.put("mail.smtp.socketFactory.class", SSL_FACTORY);
 
 
-		mailSession = Session.getDefaultInstance(props, null);
-//		mailSession.setDebug(sessionDebug);	
+		mailSession = Session.getDefaultInstance(props, null);	
 		
 	}
 	
@@ -286,7 +284,8 @@ public class RentalManager extends UnicastRemoteObject implements IVehicleParkRe
 		
 		Transport transport = mailSession.getTransport("smtp");
 		transport.connect(host, this.notificationSenderEmail, this.notificationSenderPwd);
-
+		
+		System.out.println(message+"\n");
 
 		try {
 		    transport.sendMessage(msg, msg.getAllRecipients());

@@ -16,6 +16,10 @@ import shared.IVehicleParkRentalManagement;
 
 import java.net.MalformedURLException;
 
+/**
+ * Test class to test RMI objects for rental.
+ *
+ */
 public class RentalClient {
 	
 	public static void main(String[] args) {
@@ -26,37 +30,25 @@ public class RentalClient {
 			displayListVehicles(listVehicle);
 			
 			IEmployeeDB employeeDB = (IEmployeeDB) Naming.lookup("//localhost:2000/employeeDB");
-						
-			System.out.println("Dans RENTAL CLIENT *******************************************");
+									
+			System.out.println("Is ngrumbach/password a real employee ? "+employeeDB.isEmployee("ngrumbach","password"));
+			System.out.println("Is ngrumbach/wrongpassword a real employee ? "+employeeDB.isEmployee("ngrumbach","wrongpassword"));
 			
-/*			System.out.println("Is Natacha an employee ? "+employeeDB.isEmployee("Natacha"));
-			System.out.println("Is Olie an employee ? "+employeeDB.isEmployee("Olie"));
+			IEmployee nat = employeeDB.getEmployee("ngrumbach");
+			IEmployee romain = employeeDB.getEmployee("rducrocq");
+			IEmployee alex = employeeDB.getEmployee("atherond");
 			
-			IEmployee nat = employeeDB.getEmployee("Natacha");
-			IEmployee romain = employeeDB.getEmployee("Romain");
-			IEmployee alex = employeeDB.getEmployee("Alexandre");
+			rentalMgt.rentVehicle(nat, 1);
 			
+			rentalMgt.rentVehicle(romain, 1);
+		
+			rentalMgt.rentVehicle(alex, 2);
 			
-			
-			rentalMgt.rentVehicle(nat, 0);
-			
-			
-			rentalMgt.rentVehicle(romain, 0);
-			
-			listVehicle = rentalMgt.getAvailableVehiclesForRental();
-			
-			displayListVehicles(listVehicle);
-			
-			rentalMgt.returnCar(0, 12, "My dog has dirty the car... sorry... :(");
+			rentalMgt.returnCar(1, 4, "Excellent car ! I was flashed at 230 km/h !!!! ");
 
-			listVehicle = rentalMgt.getAvailableVehiclesForRental();
 			displayListVehicles(listVehicle);
 
-			rentalMgt.returnCar(0, 16, "It seems that a dog has dirtied the car in the previous rental... :(");
 
-			listVehicle = rentalMgt.getAvailableVehiclesForRental();
-			displayListVehicles(listVehicle);
-*/
 		}
 		catch (MalformedURLException me) {
 			me.printStackTrace();

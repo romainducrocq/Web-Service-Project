@@ -17,7 +17,6 @@ import shared.IVehicle;
 /**
  * This class is in charge of creating the connection with the MySQL vehicles database.
  * Is also in charge of communicating with this DB.
- * @author natacha
  *
  */
 public class VehiclesDBManager {
@@ -102,12 +101,8 @@ public class VehiclesDBManager {
 		for (int i = 0; i < allNotes.size(); i++) {
 			notesStr += allNotes.get(i);
 		};
-		
-		System.out.println("Notes to str : "+notesStr);
-		
+				
 		String sql = "update vehicle set all_notes=\""+notesStr+"\", last_message=\""+lastMessage+"\", available_for_sale="+availableForSaleInt+" where id="+id;
-
-		System.out.println(sql);
 		
 	    try {
 	        Statement stmt = conn.createStatement();

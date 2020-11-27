@@ -13,7 +13,6 @@ import shared.IEmployee;
 /**
  * This class is in charge of creating the connection with the MySQL employees database.
  * Is also in charge of communicating with this DB.
- * @author natacha
  *
  */
 public class DBManager {

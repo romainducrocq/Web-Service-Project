@@ -19,7 +19,6 @@ import java.util.List;
  * - its price in Euros
  * - some notes given by the renters
  * - some comments given by the renters
- * @author Natacha
  *
  */
 public interface IVehicle extends Remote {
@@ -201,7 +200,7 @@ public interface IVehicle extends Remote {
 
 	/**
 	 * Setter for the image url of the vehicle.
-	 * @param the url of the image.
+	 * @param imgUrl the url of the image.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	public void setImgUrl(String imgUrl) throws RemoteException;

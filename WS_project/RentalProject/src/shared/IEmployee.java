@@ -6,7 +6,6 @@ import java.rmi.RemoteException;
 /**
  * This interface defines the structure of an employee.
  * An employee is represented by an identifier (name) and a password.
- * @author Natacha
  *
  */
 public interface IEmployee extends Remote {

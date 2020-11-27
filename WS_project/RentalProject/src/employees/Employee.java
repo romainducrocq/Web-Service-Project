@@ -7,14 +7,10 @@ import shared.IEmployee;
 
 /**
  * The implementation of an employee. He/she is described by his/her first name, last name, identifier, password and email.
- * @author Natacha
  *
  */
 public class Employee extends UnicastRemoteObject implements IEmployee {
 		
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -63,9 +59,14 @@ public class Employee extends UnicastRemoteObject implements IEmployee {
 		this.email = "ngrumbach@gmail.com";
 	}
 		
+	
 	/**
 	 * Creates an employee given his/her first name, last name, identifier, password and email.
-	 * @param id the unique identifier of the employee
+	 * @param firstName
+	 * @param lastName
+	 * @param userid
+	 * @param pwd
+	 * @param email
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	public Employee(String firstName, String lastName, String userid, String pwd, String email) throws RemoteException {
@@ -129,7 +130,7 @@ public class Employee extends UnicastRemoteObject implements IEmployee {
 
 	/**
 	 * Setter method for the identifier attribute
-	 * @param lastName a String corresponding to the identifier of the employee
+	 * @param id a String corresponding to the identifier of the employee
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
@@ -149,7 +150,7 @@ public class Employee extends UnicastRemoteObject implements IEmployee {
 
 	/**
 	 * Setter method for the email attribute
-	 * @param lastName a String corresponding to the email of the employee
+	 * @param m a String corresponding to the email of the employee
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	@Override
@@ -160,7 +161,7 @@ public class Employee extends UnicastRemoteObject implements IEmployee {
 	@Override
 	/**
 	 * Setter method for the password attribute
-	 * @param lastName a String corresponding to the password of the employee
+	 * @param pwd a String corresponding to the password of the employee
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */
 	public void setPassword(String pwd) throws RemoteException {
@@ -170,6 +171,7 @@ public class Employee extends UnicastRemoteObject implements IEmployee {
 	@Override
 	/**
 	 * Returns true if the given password is equal to the employee password.
+	 * @param pwd the password to test
 	 * @return a boolean indicating if the password parameter corresponds to the password of this employee.
 	 * @throws RemoteException may occur as this object will be used in remote method call.
 	 */

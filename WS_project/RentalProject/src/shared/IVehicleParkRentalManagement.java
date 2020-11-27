@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * This interface defines the methods necessary to manage the vehicles rentals.
- * @author Natacha
  *
  */
 public interface IVehicleParkRentalManagement extends Remote {
